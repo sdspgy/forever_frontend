@@ -1,6 +1,21 @@
+<style>
+    .des{
+        font-size: 18px;
+    }
+    .des::before{
+        content:'\260E';
+        font-size: 15px;
+    }
+    .des::after{
+        content:'x';
+        background-color: red;
+    }
+</style>
+
 <template>
     <div class="home">
         <img alt="Vue logo" src="../assets/logo.png">
+        <div class="des">sdsdsd</div>
         <HelloWorld msg="Welcome to Your Vue.js App"/>
         <TitleHead :name="nameValue"/>
     </div>

@@ -34,7 +34,7 @@ const router = new VueRouter({
 
 // 配置加载进度条
 LoadingBar.config({
-    color: '#5cb85c',
+    color: '#6495ED',
     failedColor: '#f0ad4e',
     height: 2
 })
