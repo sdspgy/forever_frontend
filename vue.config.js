@@ -7,11 +7,11 @@ module.exports = {
         port: 1199,
         proxy: {
             '/meng': {
-                target: 'http://127.0.0.1:8081',  // 请求本地 拦截/rbac代理到后台项目
+                target: 'http://127.0.0.1:11111',  // 请求本地 拦截/rbac代理到后台项目
                 ws: true
             },
             '/forever': {
-                target: 'http://127.0.0.1:8082',
+                target: 'http://127.0.0.1:11111',
                 ws: true,//如果要代理websockets,配置这个参数
                 changeOrigin: true,//是否跨域
                 pathRewrite: {

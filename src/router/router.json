@@ -1,0 +1,15 @@
+[
+  {
+    "path": "/home",
+    "children": [
+      {
+        "path": "home",
+        "name": "Home"
+      },
+      {
+        "path": "about",
+        "name": "About"
+      }
+    ]
+  }
+]
