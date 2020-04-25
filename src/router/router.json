@@ -1,14 +1,17 @@
 [
   {
     "path": "/home",
+    "title": "系统管理",
     "children": [
       {
         "path": "home",
-        "name": "Home"
+        "name": "Home",
+        "title": "用户管理"
       },
       {
         "path": "about",
-        "name": "About"
+        "name": "About",
+        "title": "权限管理"
       }
     ]
   }

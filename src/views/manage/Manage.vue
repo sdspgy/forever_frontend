@@ -1,43 +1,74 @@
 <template>
     <div>
-        <Menu v-show="!isSmillMenu" :theme="colorType" :open-names="['1']" accordion width="180px">
-            <Submenu name="1">
-                <template slot="title">
-                    <Icon type="ios-paper"/>
-                    内容管理
-                </template>
-                <MenuItem name="1-1">文章管理</MenuItem>
-                <MenuItem name="1-2">评论管理</MenuItem>
-                <MenuItem name="1-3">举报管理</MenuItem>
-            </Submenu>
-            <Submenu name="2">
-                <template slot="title">
-                    <Icon type="ios-people"/>
-                    用户管理
-                </template>
-                <MenuItem name="2-1">新增用户</MenuItem>
-                <MenuItem name="2-2">活跃用户</MenuItem>
-            </Submenu>
-        </Menu>
-
-
-        <Menu v-show="isSmillMenu" :theme="colorType" accordion width="80px">
-            <div>
-                <Icon type="ios-paper"/>
-            </div>
-            <div>
-                <Icon type="ios-people"/>
-            </div>
-        </Menu>
 
         <header>
-            <img class="headImg"
-                 src=""></img>
+            <!--<img class="headImg"-->
+            <!--src=""></img>-->
             <Icon class="menuClick" :style="{transform: 'rotateZ(' + (this.isSmillMenu ? '-90' : '0') + 'deg)'}"
-                  @click="menuEvent" size="30" type="md-menu"/>
+                  @click="menuEvent()" size="30" type="md-menu"/>
         </header>
 
-        <div class="main" :style="{left:(this.isSmillMenu ? '80' : '180') +'px' }">
+        <!--<el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">-->
+        <!--<el-radio-button :label="false">展开</el-radio-button>-->
+        <!--<el-radio-button :label="true">收起</el-radio-button>-->
+        <!--</el-radio-group>-->
+        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+                 :collapse="isSmillMenu">
+            <el-submenu index="1">
+                <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">导航一</span>
+                </template>
+                <el-menu-item-group>
+                    <span slot="title">分组一</span>
+                    <el-menu-item index="1-1">选项1</el-menu-item>
+                    <el-menu-item index="1-2">选项2</el-menu-item>
+                </el-menu-item-group>
+                <el-menu-item-group title="分组2">
+                    <el-menu-item index="1-3">选项3</el-menu-item>
+                </el-menu-item-group>
+                <el-submenu index="1-4">
+                    <span slot="title">选项4</span>
+                    <el-menu-item index="1-4-1">选项1</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span slot="title">导航二</span>
+            </el-menu-item>
+            <el-menu-item index="3" disabled>
+                <i class="el-icon-document"></i>
+                <span slot="title">导航三</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+                <i class="el-icon-setting"></i>
+                <span slot="title">导航四</span>
+            </el-menu-item>
+        </el-menu>
+
+
+        <!--<Menu v-show="!isSmillMenu" :theme="colorType" :open-names="['1']" accordion width="180px"-->
+        <!--v-for="(item,index) in menuRouters" :key="index">-->
+        <!--<Submenu name="1">-->
+        <!--<template slot="title">-->
+        <!--<Icon type="ios-paper"/>-->
+        <!--{{item.title}}-->
+        <!--</template>-->
+        <!--<div v-for="(childernItem,childernIndex) in item.children">-->
+        <!--<MenuItem name="1-1">-->
+        <!--{{childernItem.title}}-->
+        <!--</MenuItem>-->
+        <!--</div>-->
+        <!--</Submenu>-->
+        <!--</Menu>-->
+
+        <!--<Menu v-show="isSmillMenu" :theme="colorType" accordion width="80px">-->
+        <!--<div style="height: 50px;line-height: 50px">-->
+        <!--<Icon @click="menuRouterEvent()" type="ios-paper" size="20"/>-->
+        <!--</div>-->
+        <!--</Menu>-->
+
+        <div class="main" :style="{left:(this.isSmillMenu ? '65' : '200') +'px' }">
             <keep-alive :include="cachePage">
                 <router-view></router-view>
             </keep-alive>
@@ -55,9 +86,8 @@
 
     export default class Manage extends Vue {
 
-        colorType: string = 'light';
         isSmillMenu: boolean = false;
-        viewName = 'Home'
+        isCollapse: boolean = true;
 
         //methods
         private init(): void {
@@ -72,6 +102,18 @@
             // }else {
             //     this.exitFullscreen()
             // }
+        }
+
+        private menuRouterEvent(): void {
+            debugger
+        }
+
+        handleOpen(key: number, keyPath: string[]) {
+            console.log(key, keyPath);
+        }
+
+        handleClose(key: number, keyPath: string[]) {
+            console.log(key, keyPath);
         }
 
         // launchIntoFullscreen(element) {
@@ -112,6 +154,10 @@
             return this.$store.state.app.cachePage;
         }
 
+        get menuRouters(): string {
+            return this.$store.state.app.menuRouters;
+        }
+
         mounted() {
             // this.init();
 
@@ -121,11 +167,9 @@
 
 <style lang="scss" scoped>
     header {
-        position: absolute;
-        top: 0;
-        border: 1px solid skyblue;
         width: 100%;
         height: 80px;
+        box-shadow: 0px 3px 3px #f9f9f9;
 
         .headImg {
             position: absolute;
@@ -140,12 +184,23 @@
             top: 30px;
             left: 300px;
         }
+
+        .menuClick:hover {
+            cursor: pointer;
+        }
+    }
+
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 200px;
+        min-height: 400px;
+        margin-top: 2px;
     }
 
     .main {
-        width: 100%;
+        width: 88%;
         position: absolute;
         top: 80px;
-        border: 1px solid skyblue;
+        box-shadow: -3px 0px 3px #f9f9f9;
+        margin: 2px auto;
     }
 </style>

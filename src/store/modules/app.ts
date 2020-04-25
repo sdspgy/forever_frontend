@@ -2,18 +2,28 @@ import router from '@/router/index';
 
 const app = {
     state: {
-        routers: [],
         currentPath: [],
-        cachePage: []
+        cachePage: [],
+        menuRouters: [{
+            "path": "/home",
+            "title": "系统管理",
+            "children": [
+                {
+                    "path": "home",
+                    "name": "Home",
+                    "title": "用户管理"
+                }
+            ]
+        }]
     },
     mutations: {
         updateRouter(state: any, routes: any) {
-            state.routers.push(...routes);
+            state.menuRouters.push(...routes);
             router.addRoutes(routes);
         },
         setCurrentPath(state: any, pathArr: any) {
             state.currentPath = pathArr;
-        },
+        }
     }
 };
 
