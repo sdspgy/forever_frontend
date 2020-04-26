@@ -8,6 +8,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueLazyload from 'vue-lazyload'
 
+import util from './common/utiles'
 import {setStore, getStore, removeStore} from './store/storage';
 
 Vue.config.productionTip = false;
@@ -31,5 +32,6 @@ new Vue({
     render: h => h(App),
     data: {},
     mounted() {
+        util.initRouter(this);
     }
 }).$mount('#app');

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // 统一请求路径
-export const basePath = '/api'
+export const basePath = '/meng'
 
 // 超时设定
 axios.defaults.timeout = 15000;

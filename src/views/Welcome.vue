@@ -14,7 +14,7 @@
 
         private toManageEvent() {
             this.$router.push({
-                path:'/home/home'
+                name:'advert'
             })
         }
 

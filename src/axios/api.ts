@@ -4,6 +4,6 @@ import {
     postTransformRequest
 } from '../axios/index';
 
-export const getRequestDemo = (params: Object) => {
-    return getRequest('/', params)
+export const queryMenuRouter = (params:any) => {
+    return getRequest('/sys/menu/menuRouter', params)
 }
