@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {getStore} from '@/store/storage'
 
 // 统一请求路径
 export const basePath = '/meng'
@@ -40,7 +41,7 @@ axios.interceptors.response.use(response => {
 });
 
 export const getRequest = (url: string, params: Object) => {
-    let token = '';
+    let token = getStore('token');
     return axios({
         method: 'get',
         url: `${basePath}${url}`,
@@ -52,7 +53,8 @@ export const getRequest = (url: string, params: Object) => {
 };
 
 export const postRequest = (url: string, params: Object) => {
-    let token = '';
+    debugger
+    let token = getStore('token');
     return axios({
         method: 'post',
         url: `${basePath}${url}`,
@@ -64,7 +66,7 @@ export const postRequest = (url: string, params: Object) => {
 }
 
 export const postTransformRequest = (url: string, params: Object) => {
-    let token = '';
+    let token = getStore('token');
     return axios({
         method: 'post',
         url: `${basePath}${url}`,

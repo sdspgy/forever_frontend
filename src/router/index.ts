@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {LoadingBar} from 'view-design'
 import util from "@/common/utiles"
-import loadView from "@/router/loadView"
+
 /*view*/
 import Welcome from '../views/Welcome.vue'
 import Manage from '../views/manage/Manage.vue'
@@ -11,7 +11,7 @@ Vue.use(VueRouter)
 
 const defaultComponent = Manage;
 
-// export const otherRouterMap = initRouter(require('@/router/router.json'));
+export const otherRouterMap = util.initRouters(require('@/router/router.json'));
 
 export const routes = [
     {
@@ -38,7 +38,8 @@ const router = new VueRouter({
     mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
-        ...routes
+        ...routes,
+        ...otherRouterMap
     ]
 })
 

@@ -13,15 +13,14 @@ util.title = (title: any) => {
 util.initRouter = (vm: any) => {
     queryMenuRouter(null).then(res => {
         if (res.code === 200) {
-            let otherRouterMap: any = initRouters(res.sysMenus);
+            let otherRouterMap: any = util.initRouters(res.sysMenus[0].children);
             router.addRoutes(otherRouterMap);
-            vm.$store.commit('updateRouter', res.sysMenus)
+            vm.$store.commit('updateRouter', res.sysMenus[0].children)
         }
     })
 };
 
-function initRouters(router: any) {
-    debugger
+util.initRouters = (router: any) => {
     for (let i = 0; i < router.length; i++) {
         let route = router[i];
         //设置一级路由的控件为全局定义的默认控件

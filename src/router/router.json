@@ -7,21 +7,6 @@
         "path": "manage/Advert",
         "name": "advert",
         "title": "首页"
-      },
-      {
-        "path": "manage/user/User",
-        "name": "user",
-        "title": "用户管理"
-      },
-      {
-        "path": "manage/role/Role",
-        "name": "role",
-        "title": "角色管理"
-      },
-      {
-        "path": "manage/menu/Menu",
-        "name": "menu",
-        "title": "菜单管理"
       }
     ]
   }

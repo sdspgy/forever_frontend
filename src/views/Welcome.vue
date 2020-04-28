@@ -6,6 +6,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
+    import {login} from '@/axios/api';
 
     @Component({
         components: {},
@@ -13,9 +14,20 @@
     export default class Welcome extends Vue {
 
         private toManageEvent() {
-            this.$router.push({
-                name:'advert'
+            let params = {
+                username: 'admin',
+                password: '123456'
+            }
+            login(params).then(res => {
+                if (res.code === 200) {
+                    this.setStore('token', res.token);
+                    this.$router.push({
+                        name: 'advert'
+                    })
+                }
             })
+
+
         }
 
     }
