@@ -53,7 +53,6 @@ export const getRequest = (url: string, params: Object) => {
 };
 
 export const postRequest = (url: string, params: Object) => {
-    debugger
     let token = getStore('token');
     return axios({
         method: 'post',
