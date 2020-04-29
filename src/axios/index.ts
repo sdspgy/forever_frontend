@@ -7,15 +7,15 @@ export const basePath = '/meng'
 // 超时设定
 axios.defaults.timeout = 15000;
 
-axios.interceptors.request.use(config => {
+axios.interceptors.request.use((config: any) => {
     return config;
-}, err => {
+}, (err: any) => {
     alert('请求超时');
     return Promise.resolve(err);
 });
 
 // http response 拦截器
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use((response: { data: any; }) => {
     if (response.data instanceof Blob) {
         return response;
     }
@@ -34,7 +34,7 @@ axios.interceptors.response.use(response => {
             return data;
     }
     return data;
-}, (err) => {
+}, (err: { toString: () => any; }) => {
     // 返回状态码不为200时候的错误处理
     alert(err.toString());
     return Promise.resolve(err);
@@ -70,7 +70,7 @@ export const postTransformRequest = (url: string, params: Object) => {
         method: 'post',
         url: `${basePath}${url}`,
         data: params,
-        transformRequest: [function (data) {
+        transformRequest: [function (data: { [x: string]: string | number | boolean; }) {
             let ret = '';
             for (let it in data) {
                 ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';

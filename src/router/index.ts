@@ -5,11 +5,8 @@ import util from "@/common/utiles"
 
 /*view*/
 import Welcome from '../views/Welcome.vue'
-import Manage from '../views/manage/Manage.vue'
 
 Vue.use(VueRouter)
-
-const defaultComponent = Manage;
 
 export const otherRouterMap = util.initRouters(require('@/router/router.json'));
 
