@@ -8,10 +8,6 @@
                   @click="menuEvent()" size="30" type="md-menu"/>
         </header>
 
-        <!--<el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">-->
-        <!--<el-radio-button :label="false">展开</el-radio-button>-->
-        <!--<el-radio-button :label="true">收起</el-radio-button>-->
-        <!--</el-radio-group>-->
         <el-menu default-active="0" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
                  :collapse="isSmillMenu">
             <el-submenu v-for="(item,index) in menuRouters" :key="index" index=index>
@@ -24,28 +20,6 @@
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>
-
-
-        <!--<Menu v-show="!isSmillMenu" :theme="colorType" :open-names="['1']" accordion width="180px"-->
-        <!--v-for="(item,index) in menuRouters" :key="index">-->
-        <!--<Submenu name="1">-->
-        <!--<template slot="title">-->
-        <!--<Icon type="ios-paper"/>-->
-        <!--{{item.title}}-->
-        <!--</template>-->
-        <!--<div v-for="(childernItem,childernIndex) in item.children">-->
-        <!--<MenuItem name="1-1">-->
-        <!--{{childernItem.title}}-->
-        <!--</MenuItem>-->
-        <!--</div>-->
-        <!--</Submenu>-->
-        <!--</Menu>-->
-
-        <!--<Menu v-show="isSmillMenu" :theme="colorType" accordion width="80px">-->
-        <!--<div style="height: 50px;line-height: 50px">-->
-        <!--<Icon @click="menuRouterEvent()" type="ios-paper" size="20"/>-->
-        <!--</div>-->
-        <!--</Menu>-->
 
         <div class="main" :style="{left:(this.isSmillMenu ? '65' : '200') +'px' }">
             <keep-alive :include="cachePage">
@@ -70,7 +44,7 @@
 
         //methods
         private init(): void {
-            console.log("this is manage!")
+
         }
 
         private menuEvent(): void {
