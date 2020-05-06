@@ -25,6 +25,7 @@ axios.interceptors.response.use((response: { data: any; }) => {
         case 401:
             break;
         case 403:
+            alert('没有权限')
             break;
         case 500:
             break;

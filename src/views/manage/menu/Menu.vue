@@ -8,45 +8,40 @@
         </el-tree>
         <div class="updateInfo">
             <el-form ref="form" :model="form" label-width="80px">
+                <input type="hidden" name="menuId" v-model="form.menuId"/>
                 <el-form-item label="名称">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="标题">
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>
-                <el-form-item label="标题">
+                <el-form-item label="注释">
                     <el-input v-model="form.notes"></el-input>
                 </el-form-item>
                 <el-form-item label="类型">
-                    <el-select v-model="form.region" placeholder="类型">
+                    <el-select v-model="form.type" placeholder="类型">
                         <el-option label="接口" value="1"></el-option>
                         <el-option label="按钮" value="2"></el-option>
                         <el-option label="路由" value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="即时配送">
-                    <el-switch v-model="form.delivery"></el-switch>
+                <el-form-item label="排序">
+                    <el-slider
+                            v-model="form.slider"
+                            show-input>
+                    </el-slider>
                 </el-form-item>
-                <el-form-item label="活动性质">
-                    <el-checkbox-group v-model="form.type">
-                        <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-                        <el-checkbox label="地推活动" name="type"></el-checkbox>
-                        <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-                        <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-                    </el-checkbox-group>
+                <el-form-item v-show="form.type == 3? false : true" label="权限">
+                    <el-input v-model="form.power"></el-input>
                 </el-form-item>
-                <el-form-item label="特殊资源">
-                    <el-radio-group v-model="form.resource">
-                        <el-radio label="线上品牌商赞助"></el-radio>
-                        <el-radio label="线下场地免费"></el-radio>
-                    </el-radio-group>
+                <el-form-item v-show="form.type == 3? false : true" label="图标">
+                    <el-input v-model="form.icon"></el-input>
                 </el-form-item>
-                <el-form-item label="活动形式">
-                    <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-form-item v-show="form.type == 3 ? true :false" label="路径">
+                    <el-input v-model="form.path"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                    <el-button>取消</el-button>
+                    <el-button type="primary" @click="onSubmit">修改</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -54,6 +49,8 @@
 </template>
 
 <script>
+    import {queryMenuTree} from '@/axios/api'
+
     export default {
         name: "Menu",
         data() {
@@ -62,30 +59,49 @@
                     label: 'title',
                     children: 'children'
                 },
+                routerMenu: [],
                 checkedInfo: [],
                 form: {
+                    menuId: 0,
                     name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
+                    title: '',
+                    notes: '',
+                    type: '',
+                    slider: 0,
+                    power: '',
+                    icon: '',
+                    path: ''
                 }
             }
         },
-        computed: {
-            routerMenu() {
-                return this.$store.state.app.menuRouters;
-            }
+        mounted() {
+            this.init();
         },
+        computed: {},
         methods: {
+            init() {
+                queryMenuTree(null).then(res => {
+                    if (res.code === 200) {
+                        this.routerMenu = res.sysMenus[0].children
+                    }
+                })
+            },
             treeClick(data) {
                 this.checkedInfo = data
+                this.form = {
+                    menuId: data.menuId,
+                    name: data.name,
+                    title: data.title,
+                    notes: data.notes,
+                    slider: data.orderNum,
+                    power: data.perms,
+                    icon: data.icon,
+                    type: data.type.toString(),
+                    path: data.path
+                }
             },
             onSubmit() {
-                console.log('submit!');
+
             }
         }
     }

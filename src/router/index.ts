@@ -33,7 +33,7 @@ export const routes = [
 
 const router = new VueRouter({
     mode: 'hash',
-    base: process.env.BASE_URL,
+    // base: process.env.BASE_URL,
     routes: [
         ...routes,
         ...otherRouterMap
