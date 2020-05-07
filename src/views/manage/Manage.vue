@@ -40,7 +40,6 @@
     export default class Manage extends Vue {
 
         isSmillMenu: boolean = false;
-        isCollapse: boolean = true;
 
         //methods
         private init(): void {
@@ -49,12 +48,6 @@
 
         private menuEvent(): void {
             this.isSmillMenu = !this.isSmillMenu;
-            // var divTest = document.getElementById("fullScreen");
-            // if(!this.checkFull){
-            //     this.launchIntoFullscreen(divTest)
-            // }else {
-            //     this.exitFullscreen()
-            // }
         }
 
         private menuRouterEvent(item: any): void {
@@ -64,45 +57,12 @@
         }
 
         handleOpen(key: number, keyPath: string[]) {
-            console.log(key, keyPath);
+
         }
 
         handleClose(key: number, keyPath: string[]) {
-            console.log(key, keyPath);
-        }
 
-        // launchIntoFullscreen(element) {
-        //     if (element.requestFullscreen) {
-        //         element.requestFullscreen();
-        //     } else if (element.mozRequestFullScreen) {
-        //         element.mozRequestFullScreen();
-        //     } else if (element.webkitRequestFullscreen) {
-        //         element.webkitRequestFullscreen();
-        //     } else if (element.msRequestFullscreen) {
-        //         element.msRequestFullscreen();
-        //     }
-        // }
-        //
-        // exitFullscreen() {
-        //     if (document.exitFullscreen) {
-        //         document.exitFullscreen();
-        //     } else if (document.mozCancelFullScreen) {
-        //         document.mozCancelFullScreen();
-        //     } else if (document.webkitExitFullscreen) {
-        //         document.webkitExitFullscreen();
-        //     }
-        // }
-        //
-        // checkFull(){
-        //     var isFull = false;
-        //     if (document.fullscreenEnabled || document.msFullscreenEnabled ) {
-        //         isFull = window.fullScreen || document.webkitIsFullScreen;
-        //         if (isFull === undefined) {
-        //             isFull = false;
-        //         }
-        //     }
-        //     return isFull;
-        // }
+        }
 
         //computed
         get cachePage(): string {
@@ -114,8 +74,6 @@
         }
 
         mounted() {
-            // this.init();
-
         }
     }
 </script>

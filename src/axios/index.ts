@@ -79,7 +79,7 @@ export const postTransformRequest = (url: string, params: Object) => {
             return ret;
         }],
         headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
+            'Content-Type': 'application/x-www-form-urlencoded',
             'token': token
         }
     });
