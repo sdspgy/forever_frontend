@@ -13,9 +13,11 @@ util.title = (title: any) => {
 util.initRouter = (vm: any) => {
     queryMenuRouter(null).then(res => {
         if (res.code === 200) {
-            let otherRouterMap: any = util.initRouters(res.sysMenus[0].children);
-            router.addRoutes(otherRouterMap);
-            vm.$store.commit('updateRouter', res.sysMenus[0].children)
+            if (res.sysMenus.length > 0) {
+                let otherRouterMap: any = util.initRouters(res.sysMenus[0].children);
+                router.addRoutes(otherRouterMap);
+                vm.$store.commit('updateRouter', res.sysMenus[0].children)
+            }
         }
     })
 };

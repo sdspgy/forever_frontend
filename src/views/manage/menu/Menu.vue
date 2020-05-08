@@ -50,7 +50,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button size="mini" @click="resetForm('form')">重 置</el-button>
-                    <el-button size="mini" type="primary" @click="addMenu('form')">确 定</el-button>
+                    <el-button size="mini" plain type="primary" @click="addMenu('form')">确 定</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -97,7 +97,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button size="mini" @click="resetForm('form')">重 置</el-button>
-                    <el-button size="mini" type="primary" @click="updateMenu('form')">修 改</el-button>
+                    <el-button size="mini" plain type="primary" @click="updateMenu('form')">修 改</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -129,8 +129,7 @@
                     path: ''
                 },
                 rules: {},
-                dialogFormVisible: false,
-                formLabelWidth: '120px'
+                dialogFormVisible: false
             }
         },
         mounted() {
@@ -181,13 +180,14 @@
                 insertMenu(params).then(res => {
                     if (res.code === 200) {
                         this.$refs[form].resetFields();
-                        this.dialogFormVisible = false;
                         this.$message({
                             message: '操作成功',
                             type: 'success'
                         });
+                        this.init()
                     }
                 })
+                this.dialogFormVisible = false;
             },
             deleteMenuEvent() {
                 if (this.form.menuId === 0) {
@@ -203,6 +203,7 @@
                             message: '操作成功',
                             type: 'success'
                         });
+                        this.init()
                     }
                 })
             },
@@ -256,6 +257,4 @@
             width: 50%;
         }
     }
-
-
 </style>
