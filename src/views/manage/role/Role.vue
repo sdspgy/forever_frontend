@@ -16,7 +16,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button size="mini" @click="resetRoleForm('form')">重 置</el-button>
-                <el-button size="mini" plain type="primary" @click="addRole('form')">确 定</el-button>
+                <el-button size="mini" plain type="primary" @click="addOrUpdateRole('form')">确 定</el-button>
             </div>
         </el-dialog>
 
@@ -79,7 +79,8 @@
                 routerMenu: [],
                 form: {
                     roleName: '',
-                    remark: ''
+                    remark: '',
+                    roleId: ''
                 },
                 rules: {
                     roleName: [
@@ -87,7 +88,8 @@
                         {min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur'}
                     ],
                 },
-                dialogFormVisible: false
+                dialogFormVisible: false,
+                addOrUpdate: true
             }
         },
         mounted() {
@@ -103,27 +105,41 @@
             },
             openAddRole(form) {
                 this.dialogFormVisible = true;
+                this.addOrUpdate = true;
                 this.resetRoleForm(form);
             },
             resetRoleForm(form) {
                 this.$refs[form].resetFields();
             },
-            addRole(form) {
+            addOrUpdateRole(form) {
                 this.$refs[form].validate((valid) => {
                     if (valid) {
                         let params = {
                             roleName: this.form.roleName,
                             remark: this.form.remark
                         }
-                        insertRole(params).then(res => {
-                            if (res.code === 200) {
-                                this.$message({
-                                    message: '操作成功',
-                                    type: 'success'
-                                });
-                                this.init()
-                            }
-                        })
+                        if (this.addOrUpdate) {
+                            insertRole(params).then(res => {
+                                if (res.code === 200) {
+                                    this.$message({
+                                        message: '操作成功',
+                                        type: 'success'
+                                    });
+                                    this.init()
+                                }
+                            })
+                        } else {
+                            params.roleId = this.form.roleId;
+                            updateRole(params).then(res => {
+                                if (res.code === 200) {
+                                    this.$message({
+                                        message: '操作成功',
+                                        type: 'success'
+                                    });
+                                    this.init()
+                                }
+                            })
+                        }
                         this.dialogFormVisible = false;
                     }
                 })
@@ -145,8 +161,10 @@
             },
             updateRow(index, rows) {
                 this.dialogFormVisible = true;
+                this.addOrUpdate = false;
                 this.form.roleName = rows.roleName;
                 this.form.remark = rows.remark;
+                this.form.roleId = rows.roleId;
             }
         },
         computed: {}
