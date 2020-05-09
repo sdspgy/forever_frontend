@@ -1,10 +1,12 @@
 <template>
     <div class="role">
+
         <div class="addRole">
             <el-button style="margin-right: 5px" type="success" plain size="mini" @click="openAddRole('form')">新 增
             </el-button>
         </div>
 
+        <!--添加/修改-->
         <el-dialog title="" :visible.sync="dialogFormVisible">
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                 <el-form-item label="名称" prop="roleName">
@@ -17,6 +19,23 @@
             <div slot="footer" class="dialog-footer">
                 <el-button size="mini" @click="resetRoleForm('form')">重 置</el-button>
                 <el-button size="mini" plain type="primary" @click="addOrUpdateRole('form')">确 定</el-button>
+            </div>
+        </el-dialog>
+
+        <!--菜单树-->
+        <el-dialog title="" :visible.sync="dialogRoleTree">
+            <el-tree
+                    :data="sysMenus"
+                    show-checkbox
+                    node-key="menuId"
+                    :default-expanded-keys="[]"
+                    :default-checked-keys="isHaveMenuIds"
+                    :check-strictly=true
+                    :props="defaultProps"
+                    @check="checkboxEvent">
+            </el-tree>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="mini" plain type="primary" @click="roleTreeEvent">确 定</el-button>
             </div>
         </el-dialog>
 
@@ -65,6 +84,7 @@
                 </el-table-column>
             </el-table>
         </div>
+
     </div>
 </template>
 
@@ -89,7 +109,14 @@
                     ],
                 },
                 dialogFormVisible: false,
-                addOrUpdate: true
+                dialogRoleTree: false,
+                addOrUpdate: true,
+                sysMenus: [],
+                isHaveMenuIds: [],
+                defaultProps: {
+                    children: 'children',
+                    label: 'title'
+                }
             }
         },
         mounted() {
@@ -145,7 +172,38 @@
                 })
             },
             grantRow(index, rows) {
-
+                this.dialogRoleTree = true;
+                this.isHaveMenuIds.splice(0, this.isHaveMenuIds.length)
+                const roleId = rows.roleId;
+                this.form = {
+                    roleId: rows.roleId
+                }
+                queryAllMenuIshave(roleId, null).then(res => {
+                    if (res.code === 200) {
+                        this.sysMenus = res.sysMenus[0].children;
+                        this.isHaveMenuIds = res.isHaveMenuIds
+                    }
+                })
+            },
+            checkboxEvent(data, info) {
+                this.isHaveMenuIds = info.checkedKeys;
+                this.isHaveMenuIds.push(1)
+            },
+            roleTreeEvent() {
+                this.dialogRoleTree = false;
+                const menuIds = this.isHaveMenuIds.toString();
+                let params = {
+                    roleId: this.form.roleId,
+                    menuIds: menuIds
+                }
+                updateRoleMenus(params).then(res => {
+                    if (res.code === 200) {
+                        this.$message({
+                            message: '操作成功',
+                            type: 'success'
+                        });
+                    }
+                })
             },
             deleteRow(index, rows) {
                 const roleId = rows[index].roleId;
@@ -162,9 +220,11 @@
             updateRow(index, rows) {
                 this.dialogFormVisible = true;
                 this.addOrUpdate = false;
-                this.form.roleName = rows.roleName;
-                this.form.remark = rows.remark;
-                this.form.roleId = rows.roleId;
+                this.form = {
+                    roleName: rows.roleName,
+                    remark: rows.remark,
+                    roleId: rows.roleId
+                }
             }
         },
         computed: {}

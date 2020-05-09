@@ -31,6 +31,9 @@ axios.interceptors.response.use((response: { data: any; }) => {
             break;
         case 505:
             break;
+        case 601:
+            alert('token不合法')
+            break;
         default:
             return data;
     }

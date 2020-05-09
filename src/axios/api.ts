@@ -49,6 +49,9 @@ export const queryAllMenuIshave = (roleId: any, params: any) => {
 }
 
 export const updateRoleMenus = (params: any) => {
-    return postRequest('/sys/role/updateRoleMenus', params)
+    return postTransformRequest('/sys/role/updateRoleMenus', params)
 }
 
+export const allUser = (params: any) => {
+    return postRequest('/sys/user/allUser', params)
+}

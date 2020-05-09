@@ -8,15 +8,17 @@
                   @click="menuEvent()" size="30" type="md-menu"/>
         </header>
 
-        <el-menu default-active="0" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+        <el-menu :default-active="activeMenu" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
                  :collapse="isSmillMenu">
-            <el-submenu v-for="(item,index) in menuRouters" :key="index" index=index>
+            <el-submenu v-for="(item,index) in menuRouters" :key="index" :index="index.toString()">
                 <template slot="title">
                     <i class="el-icon-location"></i>
                     <span slot="title">{{item.title}}</span>
                 </template>
                 <el-menu-item-group v-for="(childernItem,childernIndex) in item.children" :key="childernIndex">
-                    <el-menu-item @click="menuRouterEvent(childernItem)" index="">{{childernItem.title}}</el-menu-item>
+                    <el-menu-item @click="menuRouterEvent(childernItem,childernIndex)"
+                                  :index="(childernIndex+1000).toString()">{{childernItem.title}}
+                    </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>
@@ -40,6 +42,7 @@
     export default class Manage extends Vue {
 
         isSmillMenu: boolean = false;
+        activeMenu: string = '-1'
 
         //methods
         private init(): void {
@@ -50,7 +53,7 @@
             this.isSmillMenu = !this.isSmillMenu;
         }
 
-        private menuRouterEvent(item: any): void {
+        private menuRouterEvent(item: any, childernIndex: number): void {
             this.$router.push({
                 name: item.name
             })
@@ -74,6 +77,7 @@
         }
 
         mounted() {
+            this.init()
         }
     }
 </script>
@@ -105,7 +109,7 @@
 
     .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 200px;
-        min-height: 400px;
+        min-height: 700px;
         margin-top: 2px;
     }
 

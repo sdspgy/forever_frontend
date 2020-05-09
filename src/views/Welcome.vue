@@ -7,6 +7,7 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import {login} from '@/axios/api';
+    import util from '../common/utiles'
 
     @Component({
         components: {},
@@ -21,13 +22,12 @@
             login(params).then(res => {
                 if (res.code === 200) {
                     this.setStore('token', res.token);
+                    util.initRouter(this);
                     this.$router.push({
                         name: 'advert'
                     })
                 }
             })
-
-
         }
 
     }

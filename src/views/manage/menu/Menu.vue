@@ -54,8 +54,7 @@
                 </div>
             </el-dialog>
         </div>
-        <el-tree class=" tree
-                    "
+        <el-tree class="tree"
                  :data="routerMenu"
                  :props="props"
                  node-key="menuId"
@@ -63,7 +62,7 @@
         </el-tree>
         <div class="updateInfo">
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-                <input type="hidden" name="menuId" prop="menuId" v-model="form.menuId"/>
+                <input type="hidden" name="menuId" v-model="form.menuId"/>
                 <el-form-item label="名称" prop="name">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
@@ -175,7 +174,7 @@
                     icon: this.form.icon,
                     type: this.form.type.toString(),
                     path: this.form.path,
-                    parentId: this.form.menuId
+                    parentId: this.form.parentId
                 }
                 insertMenu(params).then(res => {
                     if (res.code === 200) {
