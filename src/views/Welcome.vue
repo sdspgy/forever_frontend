@@ -22,6 +22,7 @@
             login(params).then(res => {
                 if (res.code === 200) {
                     this.setStore('token', res.token);
+                    this.setStore('userId', res.userId);
                     util.initRouter(this);
                     this.$router.push({
                         name: 'advert'

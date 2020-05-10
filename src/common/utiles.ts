@@ -2,6 +2,7 @@ import {queryMenuRouter} from '@/axios/api'
 import loadView from "@/router/loadView";
 import router from '@/router/index';
 import Manage from '../views/manage/Manage.vue'
+import {getStore} from "@/store/storage";
 
 let util: any = {};
 
@@ -11,9 +12,13 @@ util.title = (title: any) => {
 };
 
 util.initRouter = (vm: any) => {
-    queryMenuRouter(null).then(res => {
+    let params = {
+        userId: getStore('userId')
+    }
+    queryMenuRouter(params).then(res => {
         if (res.code === 200) {
-            if (res.sysMenus.length > 0) {
+            debugger
+            if (res.sysMenus) {
                 let otherRouterMap: any = util.initRouters(res.sysMenus[0].children);
                 router.addRoutes(otherRouterMap);
                 vm.$store.commit('updateRouter', res.sysMenus[0].children)
