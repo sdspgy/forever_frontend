@@ -1,6 +1,6 @@
 const app = {
     state: {
-        currentPath: [],
+        activeMenu: '',
         cachePage: [],
         menuRouters: []
     },
@@ -8,8 +8,8 @@ const app = {
         updateRouter(state: any, routes: any) {
             state.menuRouters.push(...routes);
         },
-        setCurrentPath(state: any, pathArr: any) {
-            state.currentPath = pathArr;
+        setActiveMenu(state: any, activeMenu: any) {
+            state.activeMenu = activeMenu;
         }
     }
 };

@@ -17,7 +17,6 @@ util.initRouter = (vm: any) => {
     }
     queryMenuRouter(params).then(res => {
         if (res.code === 200) {
-            debugger
             if (res.sysMenus) {
                 let otherRouterMap: any = util.initRouters(res.sysMenus[0].children);
                 router.addRoutes(otherRouterMap);

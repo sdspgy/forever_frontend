@@ -8,6 +8,10 @@ export const login = (params: any) => {
     return postRequest('/sys/login', params)
 }
 
+export const getUserInfo = (params: any) => {
+    return getRequest('/sys/user/info', params)
+}
+
 export const queryMenuRouter = (params: any) => {
     return getRequest('/sys/menu/menuRouter', params)
 }
@@ -54,4 +58,28 @@ export const updateRoleMenus = (params: any) => {
 
 export const allUser = (params: any) => {
     return postRequest('/sys/user/allUser', params)
+}
+
+export const insertUser = (params: any) => {
+    return postTransformRequest('/sys/user/insertUser', params)
+}
+
+export const updateUser = (params: any) => {
+    return postRequest('/sys/user/updateUser', params)
+}
+
+export const deletetUser = (userId: any, params: any) => {
+    return postRequest(`/sys/user/deletetUser/${userId}`, params)
+}
+
+export const updateUserRoles = (params: any) => {
+    return postTransformRequest('/sys/user/updateUserRoles', params)
+}
+
+export const changePassword = (params: any) => {
+    return postTransformRequest('/sys/user/changePassword', params)
+}
+
+export const changeUserHeadUrl = (params: any) => {
+    return getRequest('/sys/user/changeUserHeadUrl', params)
 }
