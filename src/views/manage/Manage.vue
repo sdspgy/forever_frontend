@@ -1,9 +1,8 @@
 <template>
     <div>
-
         <header>
-            <!--<img class="headImg"-->
-            <!--src=""></img>-->
+            <img class="headImg"
+                 src="../../assets/logo.png"></img>
             <Icon class="menuClick" :style="{transform: 'rotateZ(' + (this.isSmillMenu ? '-90' : '0') + 'deg)'}"
                   @click="menuEvent()" size="30" type="md-menu"/>
             <div class="userInfo">
@@ -61,7 +60,39 @@
             </div>
         </el-dialog>
 
-        <el-menu :default-active="activeMenu" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+        <div class="menuCache"
+             :style="{left:(this.isSmillMenu ? '65' : '200') +'px',width:(this.isSmillMenu ? '95' : '88') +'%'}">
+            <el-tag
+                    class="menuTag"
+                    style="margin: 4px"
+                    @click="openMenuAdvert"
+            >
+                首 页
+            </el-tag>
+            <el-tag
+                    class="menuTag"
+                    style="margin: 4px"
+                    v-for="(item,index) in cachePageName"
+                    :key="item.title"
+                    :type="item.menuId == activeMenu ? '' : 'info'"
+                    @click="menuClick(item)"
+                    @close="closeMenuClick(index,item.menuId)"
+                    closable>
+                {{item.title}}
+            </el-tag>
+            <el-tag
+                    class="menuTag"
+                    style="margin: 4px"
+                    type="warning"
+                    @click="cleanAllMenuClick()"
+            >
+                清空全部
+            </el-tag>
+        </div>
+
+        <el-menu :default-active="activeMenu" :collapse-transition="menuTransition" background-color=""
+                 text-color="" class="el-menu-vertical-demo"
+                 @open="handleOpen" @close="handleClose"
                  :collapse="isSmillMenu">
             <el-submenu v-for="(item,index) in menuRouters" :key="index" :index="index.toString()">
                 <template slot="title">
@@ -69,14 +100,15 @@
                     <span slot="title">{{item.title}}</span>
                 </template>
                 <el-menu-item-group v-for="(childernItem,childernIndex) in item.children" :key="childernIndex">
-                    <el-menu-item @click="menuRouterEvent(childernItem,childernIndex)"
-                                  :index="(childernIndex+1000).toString()">{{childernItem.title}}
+                    <el-menu-item @click="menuRouterEvent(childernItem,childernItem.menuId)"
+                                  :index="childernItem.menuId.toString()">{{childernItem.title}}
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>
 
-        <div class="main" :style="{left:(this.isSmillMenu ? '65' : '200') +'px' }">
+        <div class="main"
+             :style="{left:(this.isSmillMenu ? '65' : '200') +'px',width:(this.isSmillMenu ? '95' : '88') +'%'}">
             <keep-alive :include="cachePage">
                 <router-view></router-view>
             </keep-alive>
@@ -96,6 +128,7 @@
     export default class Manage extends Vue {
 
         isSmillMenu: boolean = false;
+        menuTransition: boolean = false;
         dialogFormVisibleChangePassword: boolean = false;
         dialogFormVisibleChangeHeadUrl: boolean = false;
         headUrl: string = '';
@@ -131,9 +164,14 @@
             this.isSmillMenu = !this.isSmillMenu;
         }
 
-        private menuRouterEvent(item: any, childernIndex: number): void {
-            let activeMenu = (childernIndex + 1000).toString()
-            this.setStore("activeMenu", activeMenu)
+        private menuRouterEvent(item: any, index: number): void {
+            let activeMenu = index.toString();
+            this.setStore("activeMenu", activeMenu);
+            this.activeMenu = activeMenu;
+            if (this.cachePage.indexOf(item.name) == -1) {
+                this.$store.commit("setCachePage", item.name)
+                this.$store.commit("setCachePageName", item)
+            }
             this.$router.push({
                 name: item.name
             })
@@ -213,6 +251,13 @@
             this.dialogFormVisibleChangeHeadUrl = false;
         }
 
+        openMenuAdvert() {
+            this.$router.push({
+                name: 'advert'
+            })
+            this.activeMenu = '-1';
+        }
+
         handleOpen(key: number, keyPath: string[]) {
 
         }
@@ -221,9 +266,40 @@
 
         }
 
+        menuClick(item) {
+            this.setStore("activeMenu", item.menuId)
+            this.activeMenu = item.menuId;
+            this.$router.push({
+                name: item.name
+            })
+        }
+
+        closeMenuClick(index, menuId) {
+            if (menuId == this.activeMenu) {
+                this.$router.push({
+                    name: 'advert'
+                })
+            }
+            this.$store.commit("delCachePage", index)
+            this.$store.commit("delCachePageName", index)
+        }
+
+        cleanAllMenuClick() {
+            this.$router.push({
+                name: 'advert'
+            })
+            this.activeMenu = '-1';
+            this.$store.commit("delAllCachePage")
+            this.$store.commit("delAllCachePageName")
+        }
+
         //computed
         get cachePage(): string {
             return this.$store.state.app.cachePage;
+        }
+
+        get cachePageName(): string {
+            return this.$store.state.app.cachePageName;
         }
 
         get menuRouters(): string {
@@ -244,10 +320,11 @@
 
         .headImg {
             position: absolute;
-            top: 20px;
-            left: 200px;
-            width: 60px;
-            height: 40px;
+            top: 15px;
+            left: 40px;
+            width: 50px;
+            height: 50px;
+            border-radius: 5px 5px 5px 5px;
         }
 
         .menuClick {
@@ -261,7 +338,6 @@
         }
 
         .userInfo {
-
             width: 100px;
             height: 60px;
             position: relative;
@@ -277,15 +353,26 @@
 
     .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 200px;
-        min-height: 700px;
+        height: 100%;
         margin-top: 2px;
     }
 
-    .main {
-        width: 88%;
+    .menuCache {
         position: absolute;
-        top: 80px;
+        height: 40px;
+        background-color: #F8F8FF;
+        display: flex;
+        /*overflow: scroll;*/
+
+        .menuTag:hover {
+            cursor: pointer;
+        }
+    }
+
+    .main {
+        position: absolute;
+        top: 120px;
         box-shadow: -3px 0px 3px #f9f9f9;
-        margin: 2px auto;
+        margin: 2px;
     }
 </style>

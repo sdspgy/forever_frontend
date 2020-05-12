@@ -139,7 +139,7 @@
     import {allUser, insertUser, updateUser, deletetUser, queryAllRoles, updateUserRoles} from '@/axios/api'
 
     export default {
-        name: "User",
+        name: "user",
         data() {
             return {
                 sysUsers: [],

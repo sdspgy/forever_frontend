@@ -107,7 +107,7 @@
     import {queryMenuTree, insertMenu, updateMenu, deleteMenu} from '@/axios/api'
 
     export default {
-        name: "Menu",
+        name: "menu",
         data() {
             return {
                 props: {

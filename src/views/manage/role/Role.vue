@@ -92,7 +92,7 @@
     import {queryAllRoles, insertRole, updateRole, deleteRole, queryAllMenuIshave, updateRoleMenus} from '@/axios/api'
 
     export default {
-        name: "Role",
+        name: "role",
         data() {
             return {
                 sysRoles: [],
