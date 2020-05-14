@@ -247,6 +247,9 @@
             position: relative;
             top: 50px;
             width: 30%;
+            border: 1px solid #f9f9f9;
+            box-shadow: -3px 3px 3px #f9f9f9;
+            border-radius: 5px 5px 5px 5px;
         }
 
         .updateInfo {
@@ -254,6 +257,9 @@
             top: 10px;
             left: 40%;
             width: 50%;
+            border: 1px solid #f9f9f9;
+            box-shadow: -3px 3px 3px #f9f9f9;
+            border-radius: 5px 5px 5px 5px;
         }
     }
 </style>

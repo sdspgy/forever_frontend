@@ -25,14 +25,14 @@ axios.interceptors.response.use((response: { data: any; }) => {
         case 401:
             break;
         case 403:
-            alert('没有权限')
+            console.log('没有权限')
             break;
         case 500:
             break;
         case 505:
             break;
         case 601:
-            alert('token不合法')
+            console.log('token不合法')
             break;
         default:
             return data;

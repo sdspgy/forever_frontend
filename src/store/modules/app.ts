@@ -6,7 +6,7 @@ const app = {
     },
     mutations: {
         updateRouter(state: any, routes: any) {
-            state.menuRouters.push(...routes);
+            state.menuRouters = routes;
         },
         setCachePage(state: any, cachePage: any) {
             state.cachePage.push(cachePage);

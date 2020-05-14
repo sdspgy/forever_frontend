@@ -8,6 +8,10 @@ export const login = (params: any) => {
     return postRequest('/sys/login', params)
 }
 
+export const logout = (params: any) => {
+    return getRequest('/sys/logout', params)
+}
+
 export const getUserInfo = (params: any) => {
     return getRequest('/sys/user/info', params)
 }

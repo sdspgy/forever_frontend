@@ -45,6 +45,7 @@
                 <el-button size="mini" plain type="primary" @click="grantRole">确 定</el-button>
             </div>
         </el-dialog>
+
         <div class="userTable">
             <el-table
                     :data="sysUsers"
@@ -71,9 +72,9 @@
                 <el-table-column
                         prop="roleList"
                         label="角色"
-                        width="150">
+                        width="200">
                     <template slot-scope="scope">
-                        <el-tag v-for="(item,index) in scope.row.roleList" :key="index"
+                        <el-tag style="margin: 2px 2px" v-for="(item,index) in scope.row.roleList" :key="index"
                                 type="success"
                                 disable-transitions>{{item.roleName}}
                         </el-tag>
@@ -131,15 +132,20 @@
                 </el-table-column>
             </el-table>
         </div>
+        <Pagination></Pagination>
     </div>
 
 </template>
 
 <script>
     import {allUser, insertUser, updateUser, deletetUser, queryAllRoles, updateUserRoles} from '@/axios/api'
+    import Pagination from '@/components/Pagination.vue'
 
     export default {
         name: "user",
+        components: {
+            Pagination
+        },
         data() {
             return {
                 sysUsers: [],

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height: 100%">
         <header>
             <img class="headImg"
                  src="../../assets/logo.png"></img>
@@ -21,6 +21,8 @@
                     <el-link style="height: 30px;margin-left: 5px" @click="changePassword" icon="el-icon-edit">修改密码
                     </el-link>
                     <el-link style="height: 30px" @click="changeHeadUrl" icon="el-icon-view el-icon--right">更换头像
+                    </el-link>
+                    <el-link style="height: 30px ;margin-left: 5px" @click="outSystem" icon="el-icon-user">退出系统
                     </el-link>
                     <el-button style="margin-left: 10px;color: slategray" type="text" slot="reference">{{username}}
                     </el-button>
@@ -119,7 +121,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import {getUserInfo, changePassword, changeUserHeadUrl} from '@/axios/api'
+    import {getUserInfo, changePassword, changeUserHeadUrl, logout} from '@/axios/api'
 
     @Component({
         components: {},
@@ -234,6 +236,24 @@
             this.dialogFormVisibleChangePassword = false;
         }
 
+        outSystem() {
+            let params = {
+                userId: this.getStore('userId')
+            }
+            logout(params).then(res => {
+                if (res.code === 200) {
+
+                }
+            })
+
+            this.removeStore("token");
+            this.removeStore("userId");
+            this.removeStore("activeMenu");
+            this.$router.push({
+                path: '/redirectWelcome'
+            })
+            location.reload();
+        }
 
         changeHeadUrlEvent() {
             let params = {
@@ -280,7 +300,8 @@
                     name: 'advert'
                 })
             }
-            this.$store.commit("delCachePage", index)
+            this.activeMenu = '-1';
+            this.$store.commit("delCachePage", index);
             this.$store.commit("delCachePageName", index)
         }
 
@@ -360,7 +381,7 @@
     .menuCache {
         position: absolute;
         height: 40px;
-        background-color: #F8F8FF;
+        /*background-color: #f0f0f0;*/
         display: flex;
         /*overflow: scroll;*/
 
@@ -374,5 +395,6 @@
         top: 120px;
         box-shadow: -3px 0px 3px #f9f9f9;
         margin: 2px;
+        background-color: #fff;
     }
 </style>

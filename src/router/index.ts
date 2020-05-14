@@ -17,6 +17,10 @@ export const routes = [
         component: Welcome
     },
     {
+        path: '/redirectWelcome',
+        redirect: "/",
+    },
+    {
         path: '/about',
         name: 'About',
         // route level code-splitting

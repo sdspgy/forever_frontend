@@ -12,18 +12,20 @@ util.title = (title: any) => {
 };
 
 util.initRouter = (vm: any) => {
-    let params = {
-        userId: getStore('userId')
-    }
-    queryMenuRouter(params).then(res => {
-        if (res.code === 200) {
-            if (res.sysMenus) {
-                let otherRouterMap: any = util.initRouters(res.sysMenus[0].children);
-                router.addRoutes(otherRouterMap);
-                vm.$store.commit('updateRouter', res.sysMenus[0].children)
-            }
+    if (getStore('userId')) {
+        let params = {
+            userId: getStore('userId')
         }
-    })
+        queryMenuRouter(params).then(res => {
+            if (res.code === 200) {
+                if (res.sysMenus) {
+                    let otherRouterMap: any = util.initRouters(res.sysMenus[0].children);
+                    router.addRoutes(otherRouterMap);
+                    vm.$store.commit('updateRouter', res.sysMenus[0].children)
+                }
+            }
+        })
+    }
 };
 
 util.initRouters = (router: any) => {
