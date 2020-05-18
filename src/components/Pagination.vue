@@ -1,14 +1,13 @@
 <template>
-    <div class="block">
-        <span class="demonstration">完整功能</span>
+    <div>
         <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="currentPage4"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
+                :current-page="page.currentPage"
+                :page-sizes="[10, 20, 40, 80]"
+                :page-size="page.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="400">
+                :total=sendTotalSize>
         </el-pagination>
     </div>
 </template>
@@ -16,19 +15,34 @@
 <script>
     export default {
         name: "Pagination",
+        props: {
+            sendTotalSize: Number,
+            required: true
+        },
         data() {
             return {
-                currentPage4: 4
+                page: {
+                    currentPage: 1,
+                    pageSize: 10
+                }
             };
         },
         methods: {
+            init() {
+                this.$emit('page', this.page)
+            },
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                this.page.pageSize = val;
+                this.$emit('page', this.page)
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                this.page.currentPage = val
+                this.$emit('page', this.page)
             }
         },
+        mounted() {
+            this.init();
+        }
     }
 </script>
 

@@ -1,5 +1,5 @@
 import {queryMenuRouter} from '@/axios/api'
-import loadView from "@/router/loadView";
+import {view} from "@/router/loadView";
 import router from '@/router/index';
 import Manage from '../views/manage/Manage.vue'
 import {getStore} from "@/store/storage";
@@ -41,7 +41,7 @@ util.initRouters = (router: any) => {
 function initRouterChilder(routerChilder: any) {
     for (let i = 0; i < routerChilder.length; i++) {
         let routeChilder = routerChilder[i];
-        routeChilder.component = loadView(routeChilder.path);
+        routeChilder.component = view(routeChilder.path);
     }
 }
 

@@ -132,20 +132,17 @@
                 </el-table-column>
             </el-table>
         </div>
-        <Pagination></Pagination>
+        <Pagination class="pafination" v-on:page="getInfo" :sendTotalSize="totalSize"></Pagination>
     </div>
 
 </template>
 
 <script>
     import {allUser, insertUser, updateUser, deletetUser, queryAllRoles, updateUserRoles} from '@/axios/api'
-    import Pagination from '@/components/Pagination.vue'
 
     export default {
         name: "user",
-        components: {
-            Pagination
-        },
+        components: {},
         data() {
             return {
                 sysUsers: [],
@@ -166,19 +163,30 @@
                 dialogFormVisibleGrantRole: false,
                 addOrUpdate: false,
                 checkedRoles: [],
-                roles: []
+                roles: [],
+                page: {},
+                totalSize: 0
             }
         },
         mounted() {
-            this.init()
+
         },
         methods: {
             init() {
-                allUser(null).then(res => {
+                let params = {
+                    pageSize: this.page.currentPage,
+                    pageNumber: this.page.pageSize
+                }
+                allUser(params).then(res => {
                     if (res.code === 200) {
-                        this.sysUsers = res.sysUsers
+                        this.sysUsers = res.sysUsers;
+                        this.totalSize = res.sumUser
                     }
                 })
+            },
+            getInfo(info) {
+                this.page = info;
+                this.init()
             },
             addOrUpdateUser(from) {
                 let params = {
@@ -294,6 +302,10 @@
         .userTable {
             position: relative;
             top: 30px;
+        }
+
+        .pafination {
+            margin-top: 40px
         }
     }
 </style>
