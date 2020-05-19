@@ -1,7 +1,7 @@
 <template>
     <div class="role">
 
-        <div class="addRole">
+        <div v-permission="'sys:role:addRole'" class="addRole">
             <el-button style="margin-right: 5px" type="success" plain size="mini" @click="openAddRole('form')">新 增
             </el-button>
         </div>
@@ -60,6 +60,7 @@
                         width="250">
                     <template slot-scope="scope">
                         <el-button
+                                v-permission="'sys:role:grantRole'"
                                 @click.native.prevent="grantRow(scope.$index, sysRoles[scope.$index])"
                                 type="primary"
                                 plain
@@ -67,6 +68,7 @@
                             授 权
                         </el-button>
                         <el-button
+                                v-permission="'sys:role:updateRole'"
                                 @click.native.prevent="updateRow(scope.$index, sysRoles[scope.$index])"
                                 type="warning"
                                 plain
@@ -74,6 +76,7 @@
                             修 改
                         </el-button>
                         <el-button
+                                v-permission="'sys:role:deleteRole'"
                                 @click.native.prevent="deleteRow(scope.$index, sysRoles)"
                                 type="danger"
                                 plain

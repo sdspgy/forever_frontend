@@ -4,7 +4,7 @@
     "title": "系统管理",
     "children": [
       {
-        "path": "manage/Advert",
+        "path": "Advert",
         "name": "advert",
         "title": "首页"
       }

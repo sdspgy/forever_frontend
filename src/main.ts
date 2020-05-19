@@ -10,16 +10,15 @@ import VueLazyload from 'vue-lazyload'
 
 import util from '@/common/utiles'
 import {setStore, getStore, removeStore} from '@/store/storage';
-import global from "./common/gloabalComponent";
-
-// import Pagination from '@/components/Pagination.vue';
+import global from "@/common/gloabalComponent";
+import jurisdic from "@/common/jurisdiction";
 
 Vue.config.productionTip = false;
 
 Vue.use(ViewUI);
 Vue.use(ElementUI);
 Vue.use(VueLazyload, {
-    preLoad: 1.3,
+    preLoad: 1.0,
     error: require('@/assets/img-error.png'),
     loading: require('@/assets/loading2.gif'),
     attempt: 1
@@ -29,12 +28,11 @@ Vue.prototype.setStore = setStore;
 Vue.prototype.getStore = getStore;
 Vue.prototype.removeStore = removeStore;
 
-// Vue.component('v-pagination', Pagination);
-
 new Vue({
     router,
     store,
     global,
+    jurisdic,
     render: h => h(App),
     data: {},
     mounted() {

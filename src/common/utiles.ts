@@ -1,7 +1,7 @@
 import {queryMenuRouter} from '@/axios/api'
 import {view} from "@/router/loadView";
 import router from '@/router/index';
-import Manage from '../views/manage/Manage.vue'
+import Manage from '../views/Manage.vue'
 import {getStore} from "@/store/storage";
 
 let util: any = {};

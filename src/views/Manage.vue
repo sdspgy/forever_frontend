@@ -2,7 +2,7 @@
     <div style="height: 100%">
         <header>
             <img class="headImg"
-                 src="../../assets/logo.png"></img>
+                 src="../assets/logo.png"></img>
             <Icon class="menuClick" :style="{transform: 'rotateZ(' + (this.isSmillMenu ? '-90' : '0') + 'deg)'}"
                   @click="menuEvent()" size="30" type="md-menu"/>
             <div class="userInfo">
@@ -121,7 +121,7 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import {getUserInfo, changePassword, changeUserHeadUrl, logout} from '@/axios/api'
+    import {getUserInfo, changePassword, changeUserHeadUrl, logout} from '../axios/api'
 
     @Component({
         components: {},
@@ -153,6 +153,7 @@
             getUserInfo(params).then(res => {
                 if (res.code === 200) {
                     this.username = res.user.username;
+                    this.setStore('perms', res.perms);
                     if (res.user.headUrl) {
                         this.userHeadUrl = res.user.headUrl;
                         this.previewUserHeadUrl = [];
@@ -249,6 +250,7 @@
             this.removeStore("token");
             this.removeStore("userId");
             this.removeStore("activeMenu");
+            this.removeStore("perms");
             this.$router.push({
                 path: '/redirectWelcome'
             })

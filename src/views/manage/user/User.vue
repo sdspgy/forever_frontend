@@ -1,7 +1,7 @@
 <template>
     <div class="user">
 
-        <div class="addUser">
+        <div v-permission="'sys:user:addUser'" class="addUser">
             <el-button style="margin-right: 5px" type="success" plain size="mini" @click="openAddUser('form')">新 增
             </el-button>
         </div>
@@ -108,6 +108,7 @@
                         width="250">
                     <template slot-scope="scope">
                         <el-button
+                                v-permission="'sys:user:grantRole'"
                                 @click.native.prevent="grantRoleRow(scope.$index, sysUsers[scope.$index])"
                                 type="primary"
                                 plain
@@ -115,6 +116,7 @@
                             分配角色
                         </el-button>
                         <el-button
+                                v-permission="'sys:user:updateUser'"
                                 @click.native.prevent="updateUserRow(scope.$index, sysUsers[scope.$index])"
                                 type="warning"
                                 plain
@@ -122,6 +124,7 @@
                             修 改
                         </el-button>
                         <el-button
+                                v-permission="'sys:user:deleteUser'"
                                 @click.native.prevent="deleteUserRow(scope.$index, sysUsers)"
                                 type="danger"
                                 plain
@@ -165,13 +168,29 @@
                 checkedRoles: [],
                 roles: [],
                 page: {},
-                totalSize: 0
+                totalSize: 0,
+                contentStyleObj: {
+                    height: ''
+                }
             }
         },
         mounted() {
 
         },
+        created() {
+            window.addEventListener('resize', this.getHeight);
+            this.getHeight()
+            console.log(this.contentStyleObj.height)
+        },
+
+        destroyed() {
+            console.log(this.contentStyleObj.height)
+            window.removeEventListener('resize', this.getHeight)
+        },
         methods: {
+            getHeight() {
+                this.contentStyleObj.height = window.innerHeight + 'px';
+            },
             init() {
                 let params = {
                     pageSize: this.page.currentPage,

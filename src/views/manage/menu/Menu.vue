@@ -1,9 +1,11 @@
 <template>
     <div class="menu">
         <div class="addMenu">
-            <el-button style="margin-right: 5px" type="success" plain size="mini" @click="openAddMenu('form')">新 增
+            <el-button v-permission="'sys:menu:addMenu'" style="margin-right: 5px" type="success" plain size="mini"
+                       @click="openAddMenu('form')">新 增
             </el-button>
             <el-popconfirm
+                    v-permission="'sys:menu:deleteMenu'"
                     confirmButtonText='好的'
                     cancelButtonText='不用了'
                     icon="el-icon-info"
@@ -38,10 +40,10 @@
                                 show-input>
                         </el-slider>
                     </el-form-item>
-                    <el-form-item v-show="form.type == 3? false : true" label="权限" prop="power">
+                    <el-form-item label="权限" prop="power">
                         <el-input v-model="form.power"></el-input>
                     </el-form-item>
-                    <el-form-item v-show="form.type == 3? false : true" label="图标" prop="icon">
+                    <el-form-item label="图标" prop="icon">
                         <el-input v-model="form.icon"></el-input>
                     </el-form-item>
                     <el-form-item v-show="form.type == 3 ? true :false" label="路径" prop="path">
@@ -85,10 +87,10 @@
                             show-input>
                     </el-slider>
                 </el-form-item>
-                <el-form-item v-show="form.type == 3? false : true" label="权限" prop="power">
+                <el-form-item label="权限" prop="power">
                     <el-input v-model="form.power"></el-input>
                 </el-form-item>
-                <el-form-item v-show="form.type == 3? false : true" label="图标" prop="icon">
+                <el-form-item label="图标" prop="icon">
                     <el-input v-model="form.icon"></el-input>
                 </el-form-item>
                 <el-form-item v-show="form.type == 3 ? true :false" label="路径" prop="path">
@@ -96,7 +98,9 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button size="mini" @click="resetForm('form')">重 置</el-button>
-                    <el-button size="mini" plain type="primary" @click="updateMenu('form')">修 改</el-button>
+                    <el-button v-permission="'sys:menu:updateMenu'" size="mini" plain type="primary"
+                               @click="updateMenu('form')">修 改
+                    </el-button>
                 </el-form-item>
             </el-form>
         </div>
