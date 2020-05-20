@@ -20,6 +20,10 @@ export const getActuatorHealth = (params: any) => {
     return getRequest('/actuator/health', params)
 }
 
+export const getExele = (params: any) => {
+    return getRequest('/expor', params)
+}
+
 export const queryMenuRouter = (params: any) => {
     return getRequest('/sys/menu/menuRouter', params)
 }
