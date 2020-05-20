@@ -7,6 +7,7 @@ import 'view-design/dist/styles/iview.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueLazyload from 'vue-lazyload'
+import echarts from 'echarts'
 
 import util from '@/common/utiles'
 import {setStore, getStore, removeStore} from '@/store/storage';
@@ -27,6 +28,7 @@ Vue.use(VueLazyload, {
 Vue.prototype.setStore = setStore;
 Vue.prototype.getStore = getStore;
 Vue.prototype.removeStore = removeStore;
+Vue.prototype.$echarts = echarts;
 
 new Vue({
     router,

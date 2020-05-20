@@ -1,6 +1,9 @@
 <template>
     <div class="picture">
-        <img v-lazy="item" v-for="item in pictures">
+        <h1>图片懒加载</h1>
+        <div v-for="item in pictures">
+            <img v-lazy="item">
+        </div>
     </div>
 </template>
 
@@ -30,5 +33,6 @@
 
 <style lang="scss">
     .picture {
+
     }
 </style>

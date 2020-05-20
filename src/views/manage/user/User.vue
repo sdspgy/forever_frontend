@@ -1,5 +1,5 @@
 <template>
-    <div class="user">
+    <div class="user" :style={height:(this.contentStyleObj.height)}>
 
         <div v-permission="'sys:user:addUser'" class="addUser">
             <el-button style="margin-right: 5px" type="success" plain size="mini" @click="openAddUser('form')">新 增
@@ -180,16 +180,14 @@
         created() {
             window.addEventListener('resize', this.getHeight);
             this.getHeight()
-            console.log(this.contentStyleObj.height)
         },
 
         destroyed() {
-            console.log(this.contentStyleObj.height)
             window.removeEventListener('resize', this.getHeight)
         },
         methods: {
             getHeight() {
-                this.contentStyleObj.height = window.innerHeight + 'px';
+                this.contentStyleObj.height = window.innerHeight - 125 + 'px';
             },
             init() {
                 let params = {
@@ -311,7 +309,7 @@
 
 <style lang="scss" scoped>
     .user {
-        margin: 10px 10px;
+        background-color: #f9f9f9;
 
         .addUser {
             position: absolute;

@@ -16,6 +16,10 @@ export const getUserInfo = (params: any) => {
     return getRequest('/sys/user/info', params)
 }
 
+export const getActuatorHealth = (params: any) => {
+    return getRequest('/actuator/health', params)
+}
+
 export const queryMenuRouter = (params: any) => {
     return getRequest('/sys/menu/menuRouter', params)
 }

@@ -92,10 +92,11 @@
             </el-tag>
         </div>
 
-        <el-menu :default-active="activeMenu" :collapse-transition="menuTransition" background-color=""
-                 text-color="" class="el-menu-vertical-demo"
-                 @open="handleOpen" @close="handleClose"
-                 :collapse="isSmillMenu">
+        <el-menu
+                :default-active="activeMenu" :collapse-transition="menuTransition"
+                text-color="" class="el-menu-vertical-demo"
+                @open="handleOpen" @close="handleClose"
+                :collapse="isSmillMenu">
             <el-submenu v-for="(item,index) in menuRouters" :key="index" :index="index.toString()">
                 <template slot="title">
                     <i class="el-icon-location"></i>
@@ -340,6 +341,7 @@
         width: 100%;
         height: 80px;
         box-shadow: 0px 3px 3px #f9f9f9;
+        background: linear-gradient(45deg,rgba(254,172,94,0.5),rgba(199,121,208,0.5),rgba(75,192,200,0.5));
 
         .headImg {
             position: absolute;
@@ -358,6 +360,7 @@
 
         .menuClick:hover {
             cursor: pointer;
+            color: #2b85e4;
         }
 
         .userInfo {
