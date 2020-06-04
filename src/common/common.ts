@@ -30,7 +30,7 @@ export const throttle = (fn: any, t: number) => {
             }, interval);
         } else {
             last = now;
-            fn.apply(this, args);
+            fn.apply(this, args);1
         }
     }
 }

@@ -99,8 +99,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="email"
-                        label="邮箱"
-                        width="150">
+                        label="邮箱">
                 </el-table-column>
                 <el-table-column
                         fixed="right"
@@ -309,6 +308,7 @@
 
 <style lang="scss" scoped>
     .user {
+        margin: 10px 10px;
         background-color: #f9f9f9;
 
         .addUser {

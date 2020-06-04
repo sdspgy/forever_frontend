@@ -56,6 +56,19 @@ export const getRequest = (url: string, params: Object) => {
     });
 };
 
+export const getRequestBlob = (url: string, params: Object) => {
+    let token = getStore('token');
+    return axios({
+        method: 'get',
+        url: `${basePath}${url}`,
+        params: params,
+        responseType: 'blob',
+        headers: {
+            'token': token
+        }
+    });
+};
+
 export const postRequest = (url: string, params: Object) => {
     let token = getStore('token');
     return axios({

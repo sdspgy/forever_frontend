@@ -2,7 +2,7 @@
     <div style="height: 100%">
         <header>
             <img class="headImg"
-                 src="../assets/logo.png"></img>
+                 src="https://wx.qlogo.cn/mmopen/vi_32/ypcTkDRq1MIANmELTibV3XdFrV7JrvOXb5jZEFSEqyOrFDer4hyNicArHgY11MXmK2TDGIOznvFvD5S9lSiaOB4Fw/132"></img>
             <Icon class="menuClick" :style="{transform: 'rotateZ(' + (this.isSmillMenu ? '-90' : '0') + 'deg)'}"
                   @click="menuEvent()" size="30" type="md-menu"/>
             <div class="userInfo">
@@ -94,17 +94,19 @@
 
         <el-menu
                 :default-active="activeMenu" :collapse-transition="menuTransition"
-                text-color="" class="el-menu-vertical-demo"
+                text-color="" class="el-menu-vertical-demo" :unique-opened="true"
                 @open="handleOpen" @close="handleClose"
                 :collapse="isSmillMenu">
             <el-submenu v-for="(item,index) in menuRouters" :key="index" :index="index.toString()">
                 <template slot="title">
-                    <i class="el-icon-location"></i>
+                    <i :class="item.icon"></i>
                     <span slot="title">{{item.title}}</span>
                 </template>
                 <el-menu-item-group v-for="(childernItem,childernIndex) in item.children" :key="childernIndex">
                     <el-menu-item @click="menuRouterEvent(childernItem,childernItem.menuId)"
-                                  :index="childernItem.menuId.toString()">{{childernItem.title}}
+                                  :index="childernItem.menuId.toString()">
+                        <i :class="childernItem.icon"></i>
+                        <span>{{childernItem.title}}</span>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
@@ -341,7 +343,7 @@
         width: 100%;
         height: 80px;
         box-shadow: 0px 3px 3px #f9f9f9;
-        background: linear-gradient(45deg,rgba(254,172,94,0.5),rgba(199,121,208,0.5),rgba(75,192,200,0.5));
+        background: linear-gradient(45deg, rgba(254, 172, 94, 0.5), rgba(199, 121, 208, 0.5), rgba(75, 192, 200, 0.5));
 
         .headImg {
             position: absolute;

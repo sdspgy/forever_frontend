@@ -1,31 +1,88 @@
 <template>
     <div class="picture">
+        <h1>上传图片到七牛云</h1>
+        <el-upload
+                :action="upLoadUrl"
+                :headers="headers"
+                ref="upload"
+                :data="datas"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                :before-upload="beforeUpload"
+                :on-progress="uploadSuccess"
+                :file-list="fileList"
+                drag
+                multiple
+                list-type="picture"
+                :auto-upload="false">
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <div>
+                <el-button style="margin-left: 10px;" size="small" type="success" @click="upload">点击上传</el-button>
+            </div>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+
         <h1>图片懒加载</h1>
         <div v-for="item in pictures">
-            <img v-lazy="item">
+            <div class="pictures">
+                <img class="pictureItem" v-lazy="item.pictureAddress">
+            </div>
+            <a :href="item.pictureAddress" target="_blank">{{item.pictureAddress}}</a>
         </div>
     </div>
 </template>
 
 <script>
+    import {getStore} from '@/store/storage'
+    import {uploadQiniu, quaryAllPicture} from '@/axios/api'
+
     export default {
-        name: "Picture",
+        name: "picture",
         data() {
             return {
-                pictures: [
-                    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1676676578,1846674929&fm=26&gp=0.jpg',
-                    'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2690028816,935673009&fm=26&gp=0.jpg',
-                    'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3865337356,975213993&fm=26&gp=0.jpg',
-                    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4010947811,1186706343&fm=26&gp=0.jpg',
-                    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1667140314,3431567795&fm=26&gp=0.jpg',
-                    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2582037874,1232229834&fm=26&gp=0.jpg',
-                    'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1975565641,3554422895&fm=26&gp=0.jpg',
-                    'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1929085307,3338405393&fm=26&gp=0.jpg',
-                    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2869967540,3783275802&fm=26&gp=0.jpg',
-                    'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3191650778,4044897457&fm=26&gp=0.jpg',
-                    'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=260169750,2672786948&fm=26&gp=0.jpg',
-                    'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=606286769,2418568701&fm=11&gp=0.jpg',
-                ]
+                upLoadUrl: uploadQiniu(),
+                headers: {},
+                datas: {},
+                pictures: [],
+                fileList: []
+            }
+        },
+        mounted() {
+            this.init()
+        },
+        methods: {
+            init() {
+                this.quaryAllPicture()
+            },
+            quaryAllPicture() {
+                quaryAllPicture(null).then(res => {
+                    if (res.code === 200) {
+                        this.pictures = res.pictureList;
+                    }
+                })
+            },
+            upload() {
+                this.upLoadUrl = uploadQiniu();
+                this.headers.token = getStore('token');
+                this.datas = {};
+                this.$refs.upload.submit();
+                this.fileList = []
+            },
+            handleRemove(file, fileList) {
+
+            },
+            handlePreview(file) {
+
+            },
+            beforeRemove(file, fileList) {
+                return this.$confirm(`确定移除 ${file.name}？`);
+            },
+            beforeUpload(file, fileList) {
+
+            },
+            uploadSuccess() {
+                this.quaryAllPicture()
             }
         }
     }
@@ -33,6 +90,30 @@
 
 <style lang="scss">
     .picture {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .pictures {
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
+            border-radius: 5px 5px 5px 5px;
+            overflow: hidden;
+
+            .pictureItem {
+                width: 300px;
+                height: 300px;
+                border-radius: 5px 5px 5px 5px;
+                cursor: pointer;
+                transition: all 0.6s;
+            }
+
+            .pictureItem:hover {
+                transform: scale(1.4);
+            }
+        }
 
     }
 </style>

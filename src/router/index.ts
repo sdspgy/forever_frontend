@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(route => {
-    util.title(route.name)
+    util.title('')
     LoadingBar.finish();
 });
 

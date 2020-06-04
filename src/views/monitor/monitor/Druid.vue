@@ -1,18 +1,22 @@
 <template>
-    <iframe :style="{height:(this.contentStyleObj.height)}" src="http://10.2.10.41:1199/meng/druid">
+    <iframe :style="{height:(this.contentStyleObj.height)}" :src="urlHeard + '/meng/druid'">
 
     </iframe>
 </template>
 
 <script>
     export default {
-        name: "Druid",
+        name: "druid",
         data() {
             return {
                 contentStyleObj: {
                     height: ''
-                }
+                },
+                urlHeard: ''
             }
+        },
+        mounted() {
+            this.init()
         },
         created() {
             window.addEventListener('resize', this.getHeight);
@@ -24,6 +28,9 @@
         methods: {
             getHeight() {
                 this.contentStyleObj.height = window.innerHeight - 130 + 'px';
+            },
+            init() {
+                this.urlHeard = window.location.origin
             }
         }
     }

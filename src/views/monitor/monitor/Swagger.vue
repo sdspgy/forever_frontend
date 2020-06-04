@@ -1,18 +1,22 @@
 <template>
-    <iframe :style="{height:(this.contentStyleObj.height)}" src="http://10.2.10.41:1199/meng/swagger-ui.html">
+    <iframe :style="{height:(this.contentStyleObj.height)}" :src="urlHeard + '/meng/swagger-ui.html'">
 
     </iframe>
 </template>
 
 <script>
     export default {
-        name: "Swagger",
+        name: "swagger",
         data() {
             return {
                 contentStyleObj: {
                     height: ''
-                }
+                },
+                urlHeard: ''
             }
+        },
+        mounted() {
+            this.init()
         },
         created() {
             window.addEventListener('resize', this.getHeight);
@@ -24,6 +28,9 @@
         methods: {
             getHeight() {
                 this.contentStyleObj.height = window.innerHeight - 130 + 'px';
+            },
+            init() {
+                this.urlHeard = window.location.origin
             }
         }
     }
